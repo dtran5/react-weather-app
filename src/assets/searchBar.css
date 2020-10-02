@@ -1,7 +1,25 @@
 .verticalAlign {
     min-width: 100%;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%);
+    top: 0;
+
+}
+
+.form {
+    height: 2rem;
+    margin-bottom: 1rem;
+}
+
+.custom-btn {
+    height: 100%;
+}
+
+.searchbar {
+    height: 100%;
+    outline: none;
+}
+
+.searchbar:focus {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+    border: 1px solid rgba(81, 203, 238, 1) ;
 }

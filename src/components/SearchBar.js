@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button'
+
 
 import '../assets/searchBar.css'
 
@@ -18,29 +16,21 @@ const SearchBar = (props) => {
         //receiving the getweather function here and passing in the city we searched
         //city state is set down below onChange
         props.onSubmit(city)
+        props.handleSubmit(city)
+        
+        
     }
     
     const handleError = () => {
         return (
-            <div className="alert alert-danger mx-5">
+            <div className="alert alert-danger mx-5 my-5">
                 Please enter a valid city
             </div>
         )
     }
     return (
-        <div className="verticalAlign">
+        <div className="verticalAlign" style={{ marginTop: '2rem' }}>
             <Form onSubmit={onFormSubmit}>
-                <Row>
-                    <Col
-                         xs={{ span: 8, offset: 2 }}
-                         sm={{ span: 8, offset: 2 }}
-                         md={{ span: 4, offset: 4 }}
-                         lg={{ span: 4, offset: 4 }}
-                         
-                    >
-                        {props.error ? handleError() : ''}
-                    </Col>
-                </Row>
                 <Row>
                     <Col
                         xs={{ span: 8, offset: 2 }}
@@ -49,20 +39,16 @@ const SearchBar = (props) => {
                         lg={{ span: 4, offset: 4 }}
                         className="my-auto"
                     >
-                        <div className="form">
-                            <input
-                                className="searchbar" 
-                                type="text"
-                                name="location"
-                                onChange={(e) => setCity(e.target.value)}
-                                autoComplete="off"
-
-                            />
-                        <Button
-                            type="submit"
-                        >Get Weather
-                        </Button>
-                        </div>
+                        <Form.Control
+                            className="searchbar mx-1" 
+                            type="text"
+                            name="location"
+                            onChange={(e) => setCity(e.target.value)}
+                            // autoComplete="off"
+                            placeholder="Enter City"
+                        >
+                            
+                        </Form.Control>
                     </Col>
                 </Row>
             </Form>
