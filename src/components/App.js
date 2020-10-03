@@ -184,8 +184,8 @@ const App = () => {
                 weeklyTemps={weeklyTemps}
             />
             <SearchBar 
-                onSubmit={getWeather}
-                handleSubmit={getWeeklyWeather}
+                currentDayForecastSubmit={getWeather}
+                weeklyForcastSubmit={getWeeklyWeather}
                 error={results.error}
             />
         </div>

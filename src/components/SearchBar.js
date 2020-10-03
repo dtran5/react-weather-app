@@ -15,8 +15,8 @@ const SearchBar = (props) => {
         
         //receiving the getweather function here and passing in the city we searched
         //city state is set down below onChange
-        props.onSubmit(city)
-        props.handleSubmit(city)
+        props.currentDayForecastSubmit(city)
+        props.weeklyForcastSubmit(city)
         
         
     }
