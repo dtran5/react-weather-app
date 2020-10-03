@@ -10,8 +10,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'weather-icons/css/weather-icons.css';
 
 
-
-
 const DisplayWeather = (props) => {
 
     const renderWeeklyTemps = props.weeklyTemps.map((day) => {
@@ -19,7 +17,7 @@ const DisplayWeather = (props) => {
             <div key={day.date}>
                 <Card className="border-1" style={{ width: '10rem' }}>
                     <Card.Img />
-                    <Card.Body className="wi wi-day-sunny text-center">
+                    <Card.Body className={`${day.icon} text-center`}>
                         <Card.Title style={{ fontSize: '1rem', marginTop: '0.5rem' }}>{day.date}</Card.Title>
                         <Card.Text>
                         {day.temp}&deg;F
@@ -38,7 +36,7 @@ const DisplayWeather = (props) => {
                     style={{ width: '100%', marginTop: '2.0rem', textAlign: 'center' }}
                 >
                     <Card.Body>
-                        <div className="wi wi-day-sunny display-3 text-center" style={{ color: 'white' }}>
+                        <div className={`${props.icon} display-3 text-center`} style={{ color: 'white' }}>
                             <h4 style={{ marginTop: '1rem' }}>
                                 <span className="px-4 h6">{props.dailyLow}&deg;F</span>
                                 <span className="px-4 h6">{props.dailyMax}&deg;F</span>

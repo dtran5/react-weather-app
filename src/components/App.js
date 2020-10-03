@@ -12,14 +12,58 @@ import 'weather-icons/css/weather-icons.css';
 
 const App = () => {
 
+    //state for weekly forecast
     const [city, setCity] = useState('')
     const [weeklyTemps, setWeeklyTemps] = useState([])
+    //state for single day forecast
+    const [results, setResults] = useState({
+        dailyLow: '',
+        dailyMax: '',
+        description: '',
+        currentTemp: '',
+        id: '',
+        error: false
+    })
+
+    //setting weathertype icons for depending on temperature
+    //values come from api
+    const weatherType = (icons, id) => {
+        if (id >= 200 && id <=232) {
+            return (icons.Thunderstorm)
+        } else if (id >= 300 && id <= 321) {
+            return (icons.Drizzle)
+        } else if (id >= 500 && id <= 531) {
+            return (icons.Rainy)
+        } else if (id >= 600 && id <= 622) {
+            return (icons.Snow) 
+        } else if (id >= 701 && id <= 781) {
+            return (icons.Atmosphere)
+        } else if (id === 800) {
+            return (icons.Sunny)
+        } else {
+            return (icons.Cloudy)
+        }
+    }
+
+    //weathericon classNames
+    const weatherIcons = {
+        Sunny: 'wi wi-day-sunny',
+        Cloudy: 'wi wi-cloudy',
+        Drizzle: 'wi wi-storm-sprinkle',
+        Rainy: 'wi wi-showers',
+        Snow: 'wi wi-snow',
+        Thunderstorm: 'wi wi-thunderstorm',
+        Atmosphere: 'wi wi-fog'
+
+    }
+
 
     //when city value changes, rerender the webpage
     useEffect(() => {
         getWeeklyWeather(city)
     }, [city]);
-     
+    
+    //Weekly weather api call
     const getWeeklyWeather = async (city) => {
         if (city) {
             const api = {
@@ -35,35 +79,26 @@ const App = () => {
 
             const weeklyWeather = response.data.list
 
+
             //api returns temp for every 3 hours. every 8th item in array is a new day
             const filteredWeeklyWeather = weeklyWeather.filter((element, index) => {
                 return index % 8 === 0
             })
 
-            
+            //map through array and create a new object containing these 4 properties for each day
             const weeklyTemps = filteredWeeklyWeather.map((day) => {
                 return ({
                     date: new Date(day.dt_txt).toDateString(),
                     temp: Math.round(day.main.temp),
-                    id: day.weather[0].id
+                    id: day.weather[0].id,
+                    icon: weatherType(weatherIcons, day.weather[0].id)
                 })
             })
-
-            console.log(weeklyTemps);
-            setWeeklyTemps(weeklyTemps)        
+            setWeeklyTemps(weeklyTemps)
         }
     }
 
-    const [results, setResults] = useState({
-        dailyLow: '',
-        dailyMax: '',
-        description: '',
-        currentTemp: '',
-        id: '',
-        icon: '',
-        error: false
-    })
-
+    //Current day forecast api call
     const getWeather = async (city) => {
         if (city) {
 
@@ -89,59 +124,53 @@ const App = () => {
             dailyMax: Math.round(response.data.main.temp_max),
             description: response.data.weather[0].description,
             id: response.data.weather[0].id,
+            icon: weatherType(weatherIcons, response.data.weather[0].id)
             
         })
 
         
         setCity(response.data.name)
         
-        
         } else {
             setResults({ error: true })
         }
     }
 
-    // const weatherIcons = {
-    //     Sunny: 'wi wi-day-sunny',
-    //     Cloudy: 'wi wi-cloudy',
-    //     Drizzle: 'wi wi-storm-sprinkle',
-    //     Rainy: 'wi wi-showers',
-    //     Snow: 'wi wi-snow',
-    //     Thunderstorm: 'wi wi-thunderstorm',
-    //     Atmosphere: 'wi wi-fog'
 
-    // }
 
+    //switch statement for weathertype instead of if/else (not corrected with new code)
     // const weatherType = (icons, id) => {
     //     switch (true) {
     //         case id >= 200 && id <=232:
-    //             setResults({icon: icons.Thunderstorm})
+    //             return icons.Thunderstorm
     //             break
     //         case id >= 300 && id <= 321:
-    //             setResults({icon: icons.Drizzle})
+    //             return icons.Drizzle)
     //             break
     //         case id >= 500 && id <= 531:
-    //             setResults({icon: icons.Rainy})
+    //             return icons.Rainy)
     //             break
     //         case id >= 600 && id <= 622:
-    //             setResults({icon: icons.Snow})
+    //             return icons.Snow)
     //             break
     //         case id >= 701 && id <= 781:
-    //             setResults({icon: icons.Atmosphere})
+    //             return icons.Atmosphere)
     //             break
     //         case id === 800:
-    //             setResults({icon: icons.Sunny})
-    //             console.log('eqwewqe');
+    //             return icons.Sunny)
+    //             console.log(icons.Sunny);
     //             break
     //         case id >= 801 && id <= 804:
-    //             setResults({icon: icons.Cloudy})
-    //             console.log('weqweqwe');
+    //             return icons.Cloudy)
+    //             console.log(icons.Cloudy);
     //             break
-         
-            
+    //         default:
+    //             return 'default')
     //     }
     // }
-
+    
+  
+  
 
     return (
         <div>
