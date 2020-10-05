@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-
+import classNames from 'classnames';
 
 import DisplayWeather from './DisplayWeather';
 import SearchBar from './SearchBar';
 
-
+import '../assets/styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'weather-icons/css/weather-icons.css';
 
@@ -25,6 +24,19 @@ const App = () => {
         error: false
     })
 
+    //conditional classes using classNames package
+    const backgroundClassNames = classNames({
+        Thunderstorm:  results.id >= 200 && results.id <= 232,
+        Drizzle: results.id >= 300 && results.id <= 321,
+        Rainy: results.id >= 500 && results.id <= 531,
+        Snow: results.id >= 600 && results.id <= 622,
+        Atmosphere: results.id >= 701 && results.id <= 781,
+        Sunny: results.id === 800,
+        Cloudy: results.id >= 801 && results.id <= 804
+        
+    })
+
+  
     //setting weathertype icons for depending on temperature
     //values come from api
     const weatherType = (icons, id) => {
@@ -173,7 +185,7 @@ const App = () => {
   
 
     return (
-        <div>
+        <div className={backgroundClassNames}>
             <DisplayWeather
                 city={city}
                 dailyLow={results.dailyLow}
@@ -183,7 +195,7 @@ const App = () => {
                 icon={results.icon}
                 weeklyTemps={weeklyTemps}
             />
-            <SearchBar 
+            <SearchBar
                 currentDayForecastSubmit={getWeather}
                 weeklyForcastSubmit={getWeeklyWeather}
                 error={results.error}

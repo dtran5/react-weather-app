@@ -52,6 +52,7 @@ const SearchBar = (props) => {
                     </Col>
                 </Row>
             </Form>
+            
         </div>
     )
 }
