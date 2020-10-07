@@ -7,7 +7,6 @@ import SearchBar from './SearchBar';
 
 import '../assets/styles.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'weather-icons/css/weather-icons.css';
 
 const App = () => {
 
@@ -21,7 +20,8 @@ const App = () => {
         description: '',
         currentTemp: '',
         id: '',
-        error: false
+        error: false,
+        date: ''
     })
 
     //conditional classes using classNames package
@@ -36,7 +36,7 @@ const App = () => {
         
     })
 
-  
+
     //setting weathertype icons for depending on temperature
     //values come from api
     const weatherType = (icons, id) => {
@@ -59,13 +59,13 @@ const App = () => {
 
     //weathericon classNames
     const weatherIcons = {
-        Sunny: 'wi wi-day-sunny',
-        Cloudy: 'wi wi-cloudy',
-        Drizzle: 'wi wi-storm-sprinkle',
-        Rainy: 'wi wi-showers',
-        Snow: 'wi wi-snow',
-        Thunderstorm: 'wi wi-thunderstorm',
-        Atmosphere: 'wi wi-fog'
+        Sunny: 'wu wu-32 wu-black wu-clear',
+        Cloudy: 'wu wu-32 wu-black wu-cloudy',
+        Drizzle: 'wu wu-32 wu-black wu-rain',
+        Rainy: 'wu wu-32 wu-black wu-rain',
+        Snow: 'wu wu-32 wu-black wu-snow',
+        Thunderstorm: 'wu wu-32 wu-black wu-tstorms',
+        Atmosphere: 'wu wu-32 wu-black wu-hazy'
 
     }
 
@@ -90,7 +90,7 @@ const App = () => {
             })
 
             const weeklyWeather = response.data.list
-
+            console.log(response);
 
             //api returns temp for every 3 hours. every 8th item in array is a new day
             const filteredWeeklyWeather = weeklyWeather.filter((element, index) => {
@@ -103,7 +103,8 @@ const App = () => {
                     date: new Date(day.dt_txt).toDateString(),
                     temp: Math.round(day.main.temp),
                     id: day.weather[0].id,
-                    icon: weatherType(weatherIcons, day.weather[0].id)
+                    icon: weatherType(weatherIcons, day.weather[0].id),
+                    description: day.weather[0].description
                 })
             })
             setWeeklyTemps(weeklyTemps)
@@ -136,7 +137,8 @@ const App = () => {
             dailyMax: Math.round(response.data.main.temp_max),
             description: response.data.weather[0].description,
             id: response.data.weather[0].id,
-            icon: weatherType(weatherIcons, response.data.weather[0].id)
+            icon: weatherType(weatherIcons, response.data.weather[0].id),
+            
             
         })
 

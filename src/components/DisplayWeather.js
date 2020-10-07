@@ -8,21 +8,87 @@ import Container from 'react-bootstrap/Container';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'weather-icons/css/weather-icons.css';
+import '../assets/displayWeather.css';
+import '../assets/dist/wu-icons-style.css';
 
 
 const DisplayWeather = (props) => {
 
+    // const renderTemp = () => {
+    //     if(props.city) {
+    //         return (
+    //             <div className="text-right">
+    //                 <Card className='border-0 render-temp-card'>
+    //                     <Card.Body>
+    //                         <Card.Title className="text-center text-black">{props.city}</Card.Title>
+    //                         <Card.Title className="text-center text-black">
+    //                         <h1 className="py-2">{props.currentTemp}&deg;F</h1>
+                            
+    //                         <h5 className="text-capitalize">{props.description}</h5>
+    //                         </Card.Title>
+    //                     </Card.Body>
+    //                 </Card>
+    //             </div>
+    //         );
+    //     } 
+    // }
+
+    // const renderHighAndLow = () => {
+    //     if (props.city) {
+    //         return (
+    //             <Card 
+    //                 className="border-0 render-highandlow-card" 
+                    
+    //             >
+    //                 <Card.Body>
+    //                     <div className="text-center" style={{ color: 'black' }}>
+    //                         <i className={`${props.icon} wu-64`}></i>
+    //                         <h4 style={{ marginTop: '1rem' }}>
+    //                             <span className="px-4 h6">{props.dailyLow}&deg;F</span>
+    //                             <span className="px-4 h6">{props.dailyMax}&deg;F</span>
+    //                         </h4>
+    //                     </div>
+    //                 </Card.Body>
+    //             </Card>
+    //         )
+    //     }
+    // }
+
+    const renderTemp = () => {
+        if (props.city) {
+            return (
+            <div className="render=temp-container">
+                <Card className="text-center render-temp-card">
+                    <Card.Header>{props.city}</Card.Header>
+                    <Card.Body>
+                    <Card.Title><i className={`${props.icon} wu-64`}></i></Card.Title>
+                    <Card.Title>{props.currentTemp}</Card.Title>
+                        <Card.Text className="text-capitalize">
+                        {props.description}
+                        </Card.Text>
+                        <Card.Text>
+                            <span className="px-4 h6">{props.dailyLow}&deg;F</span>
+                            <span>/</span>
+                            <span className="px-4 h6">{props.dailyMax}&deg;F</span>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </div>
+                
+            )
+        }
+    }
+
     const renderWeeklyTemps = props.weeklyTemps.map((day) => {
         return (
             <div key={day.date}>
-                <Card className="border-1" style={{ width: '10rem' }}>
-                    <Card.Img />
-                    <Card.Body className={`${day.icon} text-center`}>
-                        <Card.Title style={{ fontSize: '1rem', marginTop: '0.5rem' }}>{day.date}</Card.Title>
-                        <Card.Text>
-                        
-                        {day.temp}&deg;F
+                <Card className="text-center weekly-temps-card mb-1">
+                    <Card.Header>{day.date}</Card.Header>
+                    <Card.Body>
+                        <Card.Title><i className={`${day.icon}`}></i></Card.Title>
+                        <Card.Text>{day.temp}&deg;F</Card.Text>
+                        <Card.Text className="text-capitalize">
+                            {day.description}
                         </Card.Text>
                     </Card.Body>
                 </Card>
@@ -30,75 +96,31 @@ const DisplayWeather = (props) => {
         )
     })
 
-    const renderHighAndLow = () => {
-        if (props.city) {
-            return (
-                <Card 
-                    className="bg-transparent border-0" 
-                    style={{ width: '100%', marginTop: '2.0rem', textAlign: 'center' }}
-                >
-                    <Card.Body>
-                        <div className={`${props.icon} display-3 text-center`} style={{ color: 'white' }}>
-
-                            <h4 style={{ marginTop: '1rem' }}>
-                                <span className="px-4 h6">{props.dailyLow}&deg;F</span>
-                                <span className="px-4 h6">{props.dailyMax}&deg;F</span>
-                            </h4>
-                        </div>
-                    </Card.Body>
-                </Card>
-            )
-        }
-    }
-
-    const renderTemp = () => {
-        if(props.city) {
-            return (
-                <div>
-                    <Card className="bg-transparent border-0" style={{ width: '100%', height: '100%', marginTop: '1.5rem', textAlign: 'center' }}>
-                        <Card.Img variant="top"/>
-                        <Card.Body>
-                            <Card.Title className="text-center text-white">{props.city}</Card.Title>
-                            <Card.Title className="text-center text-white">
-                            <h1 className="py-2">{props.currentTemp}&deg;F</h1>
-                            
-                            <h5>{props.description}</h5>
-                            </Card.Title>
-                        </Card.Body>
-                    </Card>
-                </div>
-            );
-        } 
-    }
-    
     return (
         <div>
             <Container>
                 <Row style={{ marginTop: '4rem' }}>
-                    <Col 
-                  
+                    <Col
+                        className="justify-content-center"
+                        xs={{ span: 12, offset: 0 }}
+                        sm={{ span: 12, offset: 0 }}
+                        md={{ span: 8, offset: 2 }}
+                        lg={{ span: 6, offset: 3 }}
+                        xl={{ span: 6, offset: 3 }}  
                     >
                         {renderTemp()}
+                        
                     </Col>
-                    <Col
-                      
-                        >
-                        {renderHighAndLow()}
-                    </Col>
+
                 </Row>
                 <Row>
-                    <Col 
-                        xs={{ span: 12, offset: 4 }}
-                        sm={{ span: 12, offset: 1 }}
-                        md={{ span: 12, offset: 1 }}
-                        lg={{ span: 12, offset: 1 }}
-                        xl={{ span: 12, offset: 2 }}
-                        // style={{ minWidth: '400px', textAlign: 'center' }}
-                    >
-                        <CardGroup>
+                    <Col>
+                        <CardGroup className="justify-content-center">
                             {renderWeeklyTemps}
                         </CardGroup>
+
                     </Col>
+                    
                 </Row>
             </Container>
         </div>
@@ -108,8 +130,3 @@ const DisplayWeather = (props) => {
 
 export default DisplayWeather
 
-// const handleWeeklyTemps = props.weeklyWeather.map((day) => {
-//     return (
-//     <div key={day.dt_txt}>{day.main.temp}</div>
-//     )
-// })
