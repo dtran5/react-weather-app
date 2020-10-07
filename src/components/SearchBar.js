@@ -21,15 +21,17 @@ const SearchBar = (props) => {
         
     }
     
-    const handleError = () => {
+    const handleError = (props) => {
         return (
             <div className="alert alert-danger mx-5 my-5">
                 Please enter a valid city
             </div>
         )
     }
+
     return (
         <div className="verticalAlign" style={{ marginTop: '2rem' }}>
+            <div>{props.error ? handleError() : ''}</div>
             <Form onSubmit={onFormSubmit}>
                 <Row>
                     <Col
@@ -44,7 +46,7 @@ const SearchBar = (props) => {
                             type="text"
                             name="location"
                             onChange={(e) => setCity(e.target.value)}
-                            // autoComplete="off"
+                            autoComplete="off"
                             placeholder="Enter City"
                         >
                             
